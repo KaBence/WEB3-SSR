@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { GameSpecs } from '../../model/game'
+import type { GameSpecs } from '../../src/model/game'
 import type { PlayerNames } from 'Domain/src/model/Player'
 import './GameStatus.css'
 

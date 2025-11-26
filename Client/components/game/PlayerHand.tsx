@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import type { CardSpecs } from '../../model/game'
+import type { CardSpecs } from '../../src/model/game'
 import UnoCard from './UnoCard'
 import './PlayerHand.css'
 

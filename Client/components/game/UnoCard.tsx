@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { CSSProperties, MouseEventHandler } from 'react';
 import { Type } from 'Domain/src/model/Card';
-import type { CardSpecs } from '../../model/game';
+import type { CardSpecs } from '../../src/model/game';
 import './UnoCard.css';
 
 type UnoCardProps = {

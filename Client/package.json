@@ -8,9 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/client": "^4.0.9",
     "next": "16.0.3",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "Domain": "../Domain",
+    "rxjs": "^7.8.2"
   },
   "devDependencies": {
     "@types/node": "^20",

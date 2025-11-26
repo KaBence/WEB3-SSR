@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Popup from "./Popup";
 import type { State, Dispatch } from "../../stores/store";
 import { playCard, drawCard, openPopup } from "../../thunks/PopupThunk";
-import type { CardSpecs } from "../../model/game";
+import type { CardSpecs } from "../../src/model/game";
 import UnoCard from "../game/UnoCard";
 import { Type } from "Domain/src/model/Card";
 

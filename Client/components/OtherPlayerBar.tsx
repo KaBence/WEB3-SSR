@@ -2,7 +2,7 @@ import "./OtherPLayerBar.css"
 
 import accuseUnoThunk from "../thunks/AccuseUNOThunk";
 import type { Dispatch } from "../stores/store";
-import type { PlayerSpecs } from "../model/game";
+import type { PlayerSpecs } from "../src/model/game";
 import type { PlayerNames } from "domain/src/model/Player";
 import { useDispatch} from 'react-redux'
 
