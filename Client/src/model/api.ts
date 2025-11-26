@@ -1,32 +1,39 @@
-import { ApolloClient, gql, InMemoryCache, HttpLink, ApolloLink } from "@apollo/client/core";
+import { ApolloClient, gql, InMemoryCache, HttpLink, ApolloLink, split } from "@apollo/client/core";
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { subscriptionsRxJS } from "./rxjs";
 import type { ActiveGamesFeed, PendingGamesFeed } from "./game";
 
-const wsLink = new GraphQLWsLink(createClient({
-    url: 'ws://localhost:1337/graphql',
-}))
+function createSplitLink() {
+    const httpLink = new HttpLink({
+        uri: 'http://localhost:1337/graphql'
+    })
 
-const httpLink = new HttpLink({
-    uri: 'http://localhost:1337/graphql'
-})
+    // During SSR there is no window, so skip websockets.
+    if (typeof window === "undefined") {
+        return httpLink
+    }
 
-const splitLink = ApolloLink.split(
-    ({ query }) => {
-        const definition = getMainDefinition(query)
-        return (
-            definition.kind === 'OperationDefinition' &&
-            definition.operation === 'subscription'
-        )
-    },
-    wsLink,
-    httpLink,
-)
+    const wsLink = new GraphQLWsLink(createClient({
+        url: 'ws://localhost:1337/graphql',
+    }))
+
+    return split(
+        ({ query }) => {
+            const definition = getMainDefinition(query)
+            return (
+                definition.kind === 'OperationDefinition' &&
+                definition.operation === 'subscription'
+            )
+        },
+        wsLink,
+        httpLink,
+    )
+}
 
 const apolloClient = new ApolloClient({
-    link: splitLink,
+    link: createSplitLink(),
     cache: new InMemoryCache()
 })
 
