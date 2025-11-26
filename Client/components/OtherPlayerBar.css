@@ -1,0 +1,134 @@
+.players-bar {
+  display: flex;
+  gap: 12px;
+  padding: 10px;
+  background: #ffffff;
+  overflow-x: auto;
+}
+
+.player-card {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.player-card.active {
+  border-color: #22d3ee;
+  box-shadow: 0 8px 18px rgba(34, 211, 238, 0.25);
+  transform: translateY(-1px);
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #0ea5e9;
+  color: #ffffff;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.turn-pill {
+  background: #16a34a;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.hand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-stack {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 10px;
+  min-width: 140px;
+  max-width: 360px;
+}
+
+.card {
+  width: 68px;
+  height: 104px;
+  border-radius: 10px;
+  border: 2px solid #0f172a;
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card.back {
+  background-image: url("../../../public/backsideUnoCard.ico");
+  background-color: #0f172a;
+}
+
+.count-pill {
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  min-width: 72px;
+  text-align: center;
+}
+
+.call-uno button {
+  width: 100%;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  letter-spacing: 0.6px;
+  box-shadow: 0 6px 12px rgba(220, 38, 38, 0.25);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.call-uno button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(220, 38, 38, 0.35);
+}
+
+.call-uno button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 8px rgba(220, 38, 38, 0.25);
+}

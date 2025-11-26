@@ -1,0 +1,25 @@
+.player-hand {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 0;
+  margin-top: 20px;
+  min-width: calc(5 * 100px + 4 * 20px);
+  min-height: 180px;
+  padding: 12px 12px 18px;
+  box-sizing: border-box;
+}
+
+.hand-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  transform: rotate(var(--rotation, 0deg)) translateY(var(--shift, 0px));
+}
+
+.hand-card:hover {
+  transform: rotate(var(--rotation, 0deg)) translateY(calc(var(--shift, 0px) - 30px)) scale(1.05);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
