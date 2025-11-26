@@ -1,7 +1,5 @@
-import { useSelector, useDispatch } from "react-redux";
 import Popup from "./Popup";
-import type { State, Dispatch } from "../../stores/store";
-import { playCard, drawCard, openPopup } from "../../thunks/PopupThunk";
+import { useStoreState, useStoreDispatch } from "../../src/stores/store";
 import type { CardSpecs } from "../../src/model/game";
 import UnoCard from "../game/UnoCard";
 import { Type } from "Domain/src/model/Card";
@@ -13,8 +11,8 @@ interface PlayPopupProps {
 }
 
 const PlayPopup = ({ gameId, cardIndex, newCard }: PlayPopupProps) => {
-  const dispatch = useDispatch<Dispatch>();
-  const { showPlay } = useSelector((state: State) => state.popups);
+  const dispatch = useStoreDispatch();
+  const { showPlay } = useStoreState().popups;
 
   return (
     <div>

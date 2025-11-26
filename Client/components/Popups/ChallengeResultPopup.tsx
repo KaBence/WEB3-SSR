@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import Popup from "./Popup";
-import type { State, Dispatch } from "../../stores/store";
+import type { State, Dispatch } from "../../src/stores/store";
 import { popup_slice } from "../../slices/popup_slice";
 import UnoCard from '../game/UnoCard'
 

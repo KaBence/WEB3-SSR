@@ -1,17 +1,14 @@
 import "./OtherPLayerBar.css"
 
-import accuseUnoThunk from "../thunks/AccuseUNOThunk";
-import type { Dispatch } from "../stores/store";
 import type { PlayerSpecs } from "../src/model/game";
 import type { PlayerNames } from "domain/src/model/Player";
-import { useDispatch} from 'react-redux'
+import { useStoreDispatch } from "@/stores/store";
 
 export default function PlayersBar({
   players,
   gameId,
   myPlayerId,
   currentTurnId,
-
 }: {
   players: PlayerSpecs[];
   gameId: number;
@@ -19,7 +16,7 @@ export default function PlayersBar({
   currentTurnId?: number;
   
 }) {
-  const dispatch : Dispatch = useDispatch();
+  const dispatch = useStoreDispatch();
   const onAccuseUno = (accusedPlayerId: PlayerNames) => {
     if (myPlayerId === undefined) return
     accuseUnoThunk(gameId, myPlayerId, accusedPlayerId, dispatch);

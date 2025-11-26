@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "./Popup";
-import type { State, Dispatch } from "../../stores/store";
+import type { State, Dispatch } from "../../src/stores/store";
 import { challengeTrue, challengeFalse } from "../../thunks/PopupThunk";
 
 interface ChallengePopupProps {
