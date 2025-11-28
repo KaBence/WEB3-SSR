@@ -1,5 +1,5 @@
 import Popup from "./Popup";
-import { useStoreDispatch, type State } from "../../src/stores/store";
+import { useStoreDispatch, useStoreState } from "../../src/stores/store";
 import { Colors } from "Domain/src/model/Card";
 
 interface ChooseColorPopupProps {
@@ -9,7 +9,7 @@ interface ChooseColorPopupProps {
 
 const ChooseColorPopup = ({ gameId, cardIndex }:ChooseColorPopupProps) => {
   const dispatch = useStoreDispatch();
-  const { showColorChange } = useSelector((state: State) => state.popups);
+  const { showColorChange } = useStoreState().popups;
 
   const handleChooseColor = async (color: string) => {
     await chooseColor(gameId, cardIndex, color, dispatch)

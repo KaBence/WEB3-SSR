@@ -1,7 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
 import Popup from "./Popup";
-import type { State, Dispatch } from "../../src/stores/store";
-import { popup_slice } from "../../slices/popup_slice";
+import { useStoreDispatch, useStoreState } from "../../src/stores/store";
+import { popup_slice } from "../../src/slices/popup_slice";
 import UnoCard from '../game/UnoCard'
 
 
@@ -15,10 +14,8 @@ const cardStyle = (index: number, total: number) => {
 }
 
 const ChallengeResultPopup = () => {
-  const dispatch = useDispatch<Dispatch>();
-  const { showChallengeResult, challengeResult, challengeContext } = useSelector(
-    (state: State) => state.popups
-  );
+  const dispatch = useStoreDispatch();
+  const { showChallengeResult, challengeResult, challengeContext } = useStoreState().popups;
 
   if (!challengeContext) return undefined;
 
@@ -34,16 +31,16 @@ const ChallengeResultPopup = () => {
         },
       ]}
     >
-    <div className='player-hand'>
-      {challengeContext.handBeforeDraw.map((card, index) => (
-        <UnoCard
-          key={`${card.Type}-${card.Color ?? ''}-${card.CardNumber ?? ''}-${index}`}
-          card={card}
-          className='hand-card'
-          style={cardStyle(index, challengeContext.handBeforeDraw.length)}
-        />
-      ))}
-    </div>
+      <div className='player-hand'>
+        {challengeContext.handBeforeDraw.map((card, index) => (
+          <UnoCard
+            key={`${card.Type}-${card.Color ?? ''}-${card.CardNumber ?? ''}-${index}`}
+            card={card}
+            className='hand-card'
+            style={cardStyle(index, challengeContext.handBeforeDraw.length)}
+          />
+        ))}
+      </div>
     </Popup>
   );
 };

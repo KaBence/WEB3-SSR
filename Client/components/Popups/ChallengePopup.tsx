@@ -1,15 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
 import Popup from "./Popup";
-import type { State, Dispatch } from "../../src/stores/store";
-import { challengeTrue, challengeFalse } from "../../thunks/PopupThunk";
+import { useStoreDispatch, useStoreState } from "../../src/stores/store";
 
 interface ChallengePopupProps {
   gameId: number;
 }
 
 const ChallengePopup = ({ gameId }: ChallengePopupProps) => {
-  const dispatch = useDispatch<Dispatch>();
-  const { showChallenge } = useSelector((state: State) => state.popups);
+  const dispatch = useStoreDispatch();
+  const { showChallenge } = useStoreState().popups;
 
   return (
     <Popup
