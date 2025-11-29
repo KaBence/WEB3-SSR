@@ -1,50 +1,52 @@
-import "./Popups.css";
+// "use client"
 
-import type { ReactNode } from "react";
+// import "./Popups.css";
 
-interface Action {
-  label: string;
-  onClick: () => void;
-}
+// import type { ReactNode } from "react";
 
-interface PopupProps {
-  visible: boolean;
-  title?: string;
-  actions?: Action[];
-  children?: ReactNode;
-  footer?: ReactNode;
-}
+// interface Action {
+//   label: string;
+//   onClick: () => void;
+// }
 
-const Popup = ({ visible, title, actions, children, footer }: PopupProps) => {
-  if (!visible) return null;
+// interface PopupProps {
+//   visible: boolean;
+//   title?: string;
+//   actions?: Action[];
+//   children?: ReactNode;
+//   footer?: ReactNode;
+// }
 
-  return (
-    <div className="popup-overlay">
-      <div className="popup-box">
-        {title && (
-          <header>
-            <h2>{title}</h2>
-          </header>
-        )}
+// const Popup = ({ visible, title, actions, children, footer }: PopupProps) => {
+//   if (!visible) return null;
 
-        <main className="popup-content">
-          {children}
-        </main>
+//   return (
+//     <div className="popup-overlay">
+//       <div className="popup-box">
+//         {title && (
+//           <header>
+//             <h2>{title}</h2>
+//           </header>
+//         )}
 
-        {actions && actions.length ? (
-          <footer>
-            {actions.map((action, i) => (
-              <button key={i} onClick={action.onClick}>
-                {action.label}
-              </button>
-            ))}
-          </footer>
-        ) : (
-          footer && <footer>{footer}</footer>
-        )}
-      </div>
-    </div>
-  );
-};
+//         <main className="popup-content">
+//           {children}
+//         </main>
 
-export default Popup;
+//         {actions && actions.length ? (
+//           <footer>
+//             {actions.map((action, i) => (
+//               <button key={i} onClick={action.onClick}>
+//                 {action.label}
+//               </button>
+//             ))}
+//           </footer>
+//         ) : (
+//           footer && <footer>{footer}</footer>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Popup;

@@ -93,7 +93,7 @@
 }
 
 .card.back {
-  background-image: url("../../../public/backsideUnoCard.ico");
+  background-image: url("../public/uno-logo.png");
   background-color: #0f172a;
 }
 

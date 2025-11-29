@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import * as api from "../../src/model/api";
 import type { GameSpecs } from "@/model/game";
 import { StoreRoot } from "@/stores/root";
-import "@assets/App.css";
+import "../../assets/App.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,12 +29,10 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
-      <body>
-        <StoreRoot hydrationState={hydrationState}>
-          <div id="app">{children}</div>
-        </StoreRoot>
-      </body>
-    </html>
+    <>
+      <StoreRoot hydrationState={hydrationState}>
+        <div id="app">{children}</div>
+      </StoreRoot>
+    </>
   );
 }

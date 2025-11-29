@@ -3,7 +3,8 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { subscriptionsRxJS } from "./rxjs";
-import type { ActiveGamesFeed, PendingGamesFeed } from "./game";
+import type { ActiveGamesFeed, GameSpecs, PendingGamesFeed } from "./game";
+import { PendingGamesState } from "@/slices/pending_games_slice";
 
 const wsLink = new GraphQLWsLink(createClient({
     url: 'ws://localhost:1337/graphql',
@@ -30,7 +31,7 @@ const apolloClient = new ApolloClient({
     cache: new InMemoryCache()
 })
 
-export async function ActiveGamesRXJS() {
+export function ActiveGamesRXJS() {
     const subscriptionQuery = gql`
     subscription activeGamesFeed {
       activeGamesFeed {
@@ -75,7 +76,7 @@ export async function ActiveGamesRXJS() {
     return subscriptionsRxJS<ActiveGamesFeed>(apolloClient, subscriptionQuery)
 }
 
-export async function PendingGamesRXJS() {
+export function PendingGamesRXJS() {
     const subscriptionQuery = gql`
     subscription pendingGamesFeed {
       pendingGamesFeed {
@@ -159,8 +160,8 @@ export async function getPendingGames() {
         }
   `;
     try {
-        const { data } = await apolloClient.query({ query, fetchPolicy: "network-only", });
-        return data.pendingGames;
+        const { data } = await apolloClient.query<{ pendingGames: GameSpecs[] }>({ query, fetchPolicy: "network-only", });
+        return data!.pendingGames;
     } catch (error: any) {
         console.error("Failed to get pending games:", error);
         throw error;
@@ -206,8 +207,8 @@ export async function getActiveGames() {
     }
   `;
     try {
-        const { data } = await apolloClient.query({ query, fetchPolicy: "network-only", });
-        return data.activeGames;
+        const { data } = await apolloClient.query<{ activeGames: GameSpecs[] }>({ query, fetchPolicy: "network-only", });
+        return data!.activeGames;
     } catch (error: any) {
         console.error("Failed to get active games:", error);
         throw error;
@@ -253,8 +254,8 @@ export async function createGame() {
     }
   `;
     try {
-        const { data } = await apolloClient.mutate({ mutation, fetchPolicy: "network-only", });
-        return data.createGame;
+        const { data } = await apolloClient.mutate<{ createGame: GameSpecs }>({ mutation, fetchPolicy: "network-only", });
+        return data!.createGame;
     } catch (error: any) {
         console.error("Failed to create game:", error);
         throw error;
@@ -300,8 +301,8 @@ export async function joinGame(gameId: number, playerName: string) {
     }
     `;
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId, playerName }, fetchPolicy: "network-only", });
-        return data.addPlayer;
+        const { data } = await apolloClient.mutate<{ addPlayer: GameSpecs }>({ mutation, variables: { gameId, playerName }, fetchPolicy: "network-only", });
+        return data!.addPlayer;
     } catch (error: any) {
         console.error("Failed to Join a Game:", error);
         throw error;
@@ -348,8 +349,8 @@ export async function removePlayer(gameId: number, playerId: number) {
   `;
 
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId, playerId }, fetchPolicy: "network-only", });
-        return data.removePlayer;
+        const { data } = await apolloClient.mutate<{ removePlayer: GameSpecs | undefined }>({ mutation, variables: { gameId, playerId }, fetchPolicy: "network-only", });
+        return data!.removePlayer;
     } catch (error: any) {
         console.error("Failed to Remove a player:", error);
         throw error;
@@ -396,8 +397,8 @@ export async function startRound(gameId: number) {
   `;
 
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId }, fetchPolicy: "network-only", });
-        return data.startRound;
+        const { data } = await apolloClient.mutate<{ startRound: GameSpecs }>({ mutation, variables: { gameId }, fetchPolicy: "network-only", });
+        return data!.startRound;
     } catch (error: any) {
         console.error("Failed to Start Round:", error);
         throw error;
@@ -443,8 +444,8 @@ export async function changeWildCardColor(gameId: number, chosenColor: string) {
     }
 `
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId, chosenColor }, fetchPolicy: "network-only", });
-        return data.changeWildCardColor;
+        const { data } = await apolloClient.mutate<{ changeWildCardColor: GameSpecs }>({ mutation, variables: { gameId, chosenColor }, fetchPolicy: "network-only", });
+        return data!.changeWildCardColor;
     } catch (error: any) {
         console.error("Failed to change Wild Card Color:", error);
         throw error;
@@ -490,8 +491,8 @@ export async function drawCard(gameId: number) {
     }    
 `
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId }, fetchPolicy: "network-only", });
-        return data.drawCard;
+        const { data } = await apolloClient.mutate<{ drawCard: GameSpecs }>({ mutation, variables: { gameId }, fetchPolicy: "network-only", });
+        return data!.drawCard;
     } catch (error: any) {
         console.error("Failed to Start Round:", error);
         throw error;
@@ -537,9 +538,8 @@ export async function play(gameId: number, cardId: number, chosenColor?: string)
     }
   `;
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId, cardId, chosenColor }, fetchPolicy: "network-only", });
-
-        return data.playCard;
+        const { data } = await apolloClient.mutate<{ playCard: GameSpecs }>({ mutation, variables: { gameId, cardId, chosenColor }, fetchPolicy: "network-only", });
+        return data!.playCard;
     } catch (error: any) {
         console.error("Failed to play:", error);
         throw error;
@@ -553,8 +553,8 @@ export async function canPlay(gameId: number, cardId: number) {
         }
   `;
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId, cardId }, fetchPolicy: "network-only", });
-        return data.canPlay;
+        const { data } = await apolloClient.mutate<{ canPlay: boolean }>({ mutation, variables: { gameId, cardId }, fetchPolicy: "network-only", });
+        return data!.canPlay;
     } catch (error: any) {
         console.error("Failed when checking if can play:", error);
         throw error;
@@ -600,8 +600,8 @@ export async function sayUno(gameId: number, playerId: number) {
     }
 `
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId, playerId }, fetchPolicy: "network-only", });
-        return data.unoCall;
+        const { data } = await apolloClient.mutate<{ unoCall: GameSpecs }>({ mutation, variables: { gameId, playerId }, fetchPolicy: "network-only", });
+        return data!.unoCall;
     } catch (error: any) {
         console.error("Failed to Say UNO:", error);
         throw error;
@@ -647,8 +647,8 @@ export async function accuseUno(gameId: number, accuser: number, accused: number
     }
   `
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId, accuser, accused }, fetchPolicy: "network-only", });
-        return data.accuseUno;
+        const { data } = await apolloClient.mutate<{ accuseUno: GameSpecs }>({ mutation, variables: { gameId, accuser, accused }, fetchPolicy: "network-only", });
+        return data!.accuseUno;
     } catch (error: any) {
         console.error("Failed to accuse UNO:", error);
         throw error;
@@ -662,8 +662,8 @@ export async function challengeDraw4(gameId: number, response: boolean) {
   }
   `;
     try {
-        const { data } = await apolloClient.mutate({ mutation, variables: { gameId, response }, fetchPolicy: "network-only", });
-        return data.challengeDraw4;
+        const { data } = await apolloClient.mutate<{ challengeDraw4: boolean }>({ mutation, variables: { gameId, response }, fetchPolicy: "network-only", });
+        return data!.challengeDraw4;
     } catch (error: any) {
         console.error("Failed to execute challenge draw 4:", error);
         throw error;

@@ -1,8 +1,7 @@
-import "./OtherPLayerBar.css"
-
 import type { PlayerSpecs } from "../src/model/game";
 import type { PlayerNames } from "domain/src/model/Player";
-import { useStoreDispatch } from "@/stores/store";
+import * as api from "@/model/api"
+import "./OtherPlayerBar.css"
 
 export default function PlayersBar({
   players,
@@ -16,10 +15,9 @@ export default function PlayersBar({
   currentTurnId?: number;
   
 }) {
-  const dispatch = useStoreDispatch();
   const onAccuseUno = (accusedPlayerId: PlayerNames) => {
     if (myPlayerId === undefined) return
-    accuseUnoThunk(gameId, myPlayerId, accusedPlayerId, dispatch);
+    api.accuseUno(gameId,myPlayerId,accusedPlayerId)
   };
 
   const visiblePlayers = players.filter(

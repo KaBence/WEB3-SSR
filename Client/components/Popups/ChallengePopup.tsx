@@ -1,34 +1,36 @@
-import Popup from "./Popup";
-import { useStoreDispatch, useStoreState } from "../../src/stores/store";
+// "use client"
 
-interface ChallengePopupProps {
-  gameId: number;
-}
+// import Popup from "./Popup";
+// import { useStoreDispatch, useStoreState } from "../../src/stores/store";
 
-const ChallengePopup = ({ gameId }: ChallengePopupProps) => {
-  const dispatch = useStoreDispatch();
-  const { showChallenge } = useStoreState().popups;
+// interface ChallengePopupProps {
+//   gameId: number;
+// }
 
-  return (
-    <Popup
-      visible={showChallenge}
-      title="Do you want to challenge the player?"
-      actions={[
-        {
-          label: "Yes",
-          onClick: () => {
-            dispatch(challengeTrue(gameId));
-          },
-        },
-        {
-          label: "No",
-          onClick: () => {
-            dispatch(challengeFalse(gameId));
-          },
-        },
-      ]}
-    />
-  );
-};
+// const ChallengePopup = ({ gameId }: ChallengePopupProps) => {
+//   const dispatch = useStoreDispatch();
+//   const { showChallenge } = useStoreState().popups;
 
-export default ChallengePopup;
+//   return (
+//     <Popup
+//       visible={showChallenge}
+//       title="Do you want to challenge the player?"
+//       actions={[
+//         {
+//           label: "Yes",
+//           onClick: () => {
+//             dispatch(challengeTrue(gameId));
+//           },
+//         },
+//         {
+//           label: "No",
+//           onClick: () => {
+//             dispatch(challengeFalse(gameId));
+//           },
+//         },
+//       ]}
+//     />
+//   );
+// };
+
+// export default ChallengePopup;
