@@ -8,10 +8,9 @@ import { useParams, useRouter } from 'next/navigation'
 //Components
 import StatusBar from "../../../../components/Statusbar"
 import PlayersBar from "../../../../components/OtherPlayerBar"
-// import PlayPopup from "../../../../components/Popups/PlayPopup";
-// import ChooseColorPopup from "../../../../components/Popups/ChooseColorPopup";
-// import ChallengePopup from "../../../../components/Popups/ChallengePopup";
-// import ChallengeResultPopup from "../../../../components/Popups/ChallengeResultPopup";
+import ChooseColorPopup from "../../../../components/Popups/ChooseColorPopup";
+import ChallengePopup from "../../../../components/Popups/ChallengePopup";
+import ChallengeResultPopup from "../../../../components/Popups/ChallengeResultPopup";
 import DrawPile from '../../../../components/game/DrawPile'
 import DiscardPile from '../../../../components/game/DiscardPile'
 import PlayerHand from '../../../../components/game/PlayerHand'
@@ -22,6 +21,7 @@ import GameStatus from '../../../../components/game/GameStatus'
 import type { CardSpecs } from '@/model/game'
 import { State, useStoreDispatch, useStoreState } from '@/stores/store'
 import * as api from "@/model/api"
+import { popup_slice } from '@/slices/popup_slice'
 
 //Domain Enums
 import { PlayerNames } from 'Domain/src/model/Player'
@@ -71,7 +71,7 @@ const Game = () => {
   const playWithPopup = ((gameId: number, cardId: number) => {
     const playedCard = myHand[cardId]
     if (playedCard.Type == Type.Wild || playedCard.Type == Type.WildDrawFour) {
-      // PopupThunk.openPopup({ popup: "ChooseColor", card: cardId }, dispatch)
+      dispatch(popup_slice.actions.openColorChange(cardId))
     }
     else {
       api.play(gameId,cardId)
@@ -149,7 +149,7 @@ const Game = () => {
         prevTopCard.CardNumber !== round.topCard.CardNumber;
 
       if (justPlayed && round.topCard.Type === Type.DummyDraw4 && round.currentPlayer === myPlayer?.playerName) {
-        // PopupThunk.openPopup({ popup: "Challenge" }, dispatch);
+        dispatch(popup_slice.actions.openChallenge()) 
       }
     }
 
@@ -216,10 +216,9 @@ const Game = () => {
         />
       </aside>
 
-      {/* <PlayPopup gameId={game?.id!} cardIndex={-1} newCard={myHand[myHand.length - 1]} />
-      <ChooseColorPopup gameId={game?.id!} cardIndex={popup.cardToPlay} />
+      <ChooseColorPopup gameId={game?.id!} cardID={popup.cardToPlay} />
       <ChallengePopup gameId={game?.id!} />
-      <ChallengeResultPopup /> */}
+      <ChallengeResultPopup />
     </div>
   )
 }
