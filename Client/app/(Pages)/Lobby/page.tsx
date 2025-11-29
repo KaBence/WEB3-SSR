@@ -88,8 +88,9 @@ const Lobby = () => {
             }
 
             try {
-                dispatch(player_slice.actions.joinGame(player.playerName!))
-                await api.joinGame(gameId,player.player!);
+                const game = await api.joinGame(gameId,player.player!);
+                const playername = game?.players?.find((p: { name: string}) => p.name === player.player)?.playerName
+                dispatch(player_slice.actions.joinGame(playername!))
                 setJoinedGameId(gameId);
             } catch (err) {
                 console.error("Failed to join game", err);
