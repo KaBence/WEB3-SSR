@@ -4,14 +4,13 @@ import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { subscriptionsRxJS } from "./rxjs";
 import type { ActiveGamesFeed, GameSpecs, PendingGamesFeed } from "./game";
-import { PendingGamesState } from "@/slices/pending_games_slice";
 
 const wsLink = new GraphQLWsLink(createClient({
-    url: 'ws://192.168.137.1:1337/graphql',
+    url: 'ws://localhost:1337/graphql',
 }))
 
 const httpLink = new HttpLink({
-    uri: 'http://192.168.137.1:1337/graphql'
+    uri: 'http://localhost:1337/graphql'
 })
 
 const splitLink = ApolloLink.split(
